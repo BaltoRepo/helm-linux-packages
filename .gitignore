@@ -1,0 +1,4 @@
+*.deb
+.idea/
+.envrc
+tmp/
