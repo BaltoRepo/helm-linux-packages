@@ -40,9 +40,6 @@ function package_helm {
     MANPAGE="tmp/manpages/helm.gz"
   fi
 
-  rm -rf tmp/
-  mkdir -p tmp/
-
   curl "https://get.helm.sh/helm-v${HELM_VERSION}-linux-${DOWNLOAD_ARCH}.tar.gz" --output tmp/helm.tar.gz
 
   tar -xzvf tmp/helm.tar.gz --directory tmp/
@@ -62,6 +59,8 @@ function package_helm {
     ${MANPAGE}=/usr/share/man/man8/ ${TILLER_FPM}
 }
 
+rm -rf tmp/
+mkdir -p tmp/
 cp -r manpages tmp/
 gzip tmp/manpages/*
 
