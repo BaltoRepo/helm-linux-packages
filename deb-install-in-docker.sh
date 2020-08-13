@@ -6,4 +6,5 @@ if [ -z "$PACKAGE" ]; then
 fi
 
 dpkg -i /opt/${PACKAGE}
-helm version
+/usr/sbin/helm version  # This is a symlink; supported for backwards compatibility
+/usr/bin/helm version

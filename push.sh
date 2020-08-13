@@ -11,7 +11,7 @@ else
   # Default to Helm 3
   PACKAGE_NAME=helm
 fi
-REPO_UPLOAD=${REPO_UPLOAD:-https://helm.baltorepo.com/stable/helm/upload/}
+REPO_UPLOAD=${REPO_UPLOAD:-https://helm.baltorepo.com/stable/debian/upload/}
 
 function push {
   ARCH=$1

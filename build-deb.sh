@@ -30,12 +30,14 @@ function package_helm {
     DOWNLOAD_ARCH="386"
   fi
   if [[ "$HELM_VERSION" = 2* ]]; then
-    TILLER_FPM="tmp/linux-${DOWNLOAD_ARCH}/tiller=/usr/sbin/"
+    TILLER_FPM="tmp/linux-${DOWNLOAD_ARCH}/tiller=/usr/bin/"
+    TILLER_FPM_SYMLINK="tmp/symlinks/tiller=/usr/sbin/"
     DEB_DESCRIPTION="The package manager for Kubernetes (v2)"
     MANPAGE="tmp/manpages/helm2.gz"
   else
     # Default to Helm 3
     TILLER_FPM=""
+    TILLER_FPM_SYMLINK=""
     DEB_DESCRIPTION="The package manager for Kubernetes"
     MANPAGE="tmp/manpages/helm.gz"
   fi
@@ -55,14 +57,19 @@ function package_helm {
     --url "${PACKAGE_URL}" \
     --description "${DEB_DESCRIPTION}" \
     tmp/linux-${DOWNLOAD_ARCH}/LICENSE=/usr/share/doc/${PACKAGE_NAME}/ \
-    tmp/linux-${DOWNLOAD_ARCH}/helm=/usr/sbin/ \
-    ${MANPAGE}=/usr/share/man/man8/ ${TILLER_FPM}
+    tmp/linux-${DOWNLOAD_ARCH}/helm=/usr/bin/ \
+    tmp/symlinks/helm=/usr/sbin/ \
+    ${MANPAGE}=/usr/share/man/man8/helm.gz ${TILLER_FPM} ${TILLER_FPM_SYMLINK}
 }
 
 rm -rf tmp/
 mkdir -p tmp/
 cp -r manpages tmp/
 gzip tmp/manpages/*
+# Make symlinks that live in old location; see https://github.com/BaltoRepo/helm-linux-packages/issues/1
+mkdir -p tmp/symlinks
+ln -sf /usr/bin/helm tmp/symlinks/helm
+ln -sf /usr/bin/tiller tmp/symlinks/tiller
 
 for ARCH in amd64 i386 armel arm64 ppc64el s390x; do
   package_helm ${ARCH}
