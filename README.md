@@ -47,3 +47,4 @@ export REPO_PW=your-password
 Packaging code is offered under the MIT license, copyright 2020 Matthew Fox.
 
 Copyright for Helm binaries remains with the original owners.
+
