@@ -20,7 +20,7 @@ function push {
     --verbose \
     --http1.1 \
     --progress-bar \
-    --user "${REPO_USER}:${REPO_PW}" \
+    --header "Authorization: Bearer ${REPO_TOKEN}" \
     --form "package=@${PACKAGE_NAME}_${DEB_VERSION}_${ARCH}.deb" \
     --form "readme=<repo-readme.md" \
     --form distribution=all \
