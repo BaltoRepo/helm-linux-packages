@@ -19,14 +19,14 @@ DEB_REVISION=${DEB_REVISION:-1}
 function package_helm {
   ARCH=$1
   DOWNLOAD_ARCH=$ARCH
-  if [ "${DOWNLOAD_ARCH}" == "ppc64el" ]; then
-    # Golang has arch ppc64le while Debian calls it ppc64el.
+  if [ "${ARCH}" == "ppc64el" ]; then
+    # Debian's arch ppc64el in Golang terms is ppc64le.
     DOWNLOAD_ARCH="ppc64le"
-  elif [ "${DOWNLOAD_ARCH}" == "armel" ]; then
-    # Golang has arch arm while Debian calls it armel.
+  elif [ "${ARCH}" == "armel" ]; then
+    # Debian's arch armel in Golang terms is arm.
     DOWNLOAD_ARCH="arm"
-  elif [ "${DOWNLOAD_ARCH}" == "i386" ]; then
-    # Golang has arch 386 while Debian calls it i386.
+  elif [ "${ARCH}" == "i386" ]; then
+    # Debian's arch i386 in Golang terms is 386.
     DOWNLOAD_ARCH="386"
   fi
   if [[ "$HELM_VERSION" = 2* ]]; then
@@ -48,11 +48,11 @@ function package_helm {
 
   rm -f ${PACKAGE_NAME}_${HELM_VERSION}-${DEB_REVISION}_${ARCH}.deb
   fpm \
-    -s dir \
-    -t deb \
-    -n "${PACKAGE_NAME}" \
-    -a "${ARCH}" \
-    -v "${HELM_VERSION}-${DEB_REVISION}" \
+    --input-type dir \
+    --output-type deb \
+    --name "${PACKAGE_NAME}" \
+    --architecture "${ARCH}" \
+    --version "${HELM_VERSION}-${DEB_REVISION}" \
     --maintainer 'Matt Fox <matt@getbalto.com>' \
     --url "${PACKAGE_URL}" \
     --description "${DEB_DESCRIPTION}" \
