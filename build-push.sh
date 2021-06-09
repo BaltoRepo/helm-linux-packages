@@ -10,6 +10,6 @@ fi
 export DEB_PACKAGE=helm
 export DEB_VERSION=${HELM_VERSION}-1
 
-./build-deb.sh
+./build.sh
 ./test-deb.sh
 ./push.sh

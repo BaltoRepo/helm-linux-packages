@@ -5,6 +5,10 @@ if [ -z "$DEB_VERSION" ]; then
   echo "DEB_VERSION env variable is required and not set."
   exit 1
 fi
+if [ -z "${PUSH_TOKEN}" ]; then
+  echo "PUSH_TOKEN env variable is required and not set."
+  exit 1
+fi
 if [[ "$DEB_VERSION" = 2* ]]; then
 	PACKAGE_NAME=helm2
 else
@@ -20,7 +24,7 @@ function push {
     --verbose \
     --http1.1 \
     --progress-bar \
-    --header "Authorization: Bearer ${REPO_TOKEN}" \
+    --header "Authorization: Bearer ${PUSH_TOKEN}" \
     --form "package=@${PACKAGE_NAME}_${DEB_VERSION}_${ARCH}.deb" \
     --form "readme=<repo-readme.md" \
     --form distribution=all \
